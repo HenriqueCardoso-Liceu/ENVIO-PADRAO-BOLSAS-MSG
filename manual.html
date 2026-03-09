@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Manual - Envio Padrao Primeira Mensagem</title>
+    <style>
+        @page { margin: 2cm; }
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            color: #222;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 30px;
+            line-height: 1.6;
+        }
+        h1 {
+            text-align: center;
+            color: #1a3a5c;
+            border-bottom: 3px solid #1a3a5c;
+            padding-bottom: 15px;
+            font-size: 26px;
+        }
+        h2 {
+            color: #1a3a5c;
+            border-left: 4px solid #1a3a5c;
+            padding-left: 12px;
+            margin-top: 35px;
+            font-size: 20px;
+        }
+        h3 {
+            color: #2c5f8a;
+            margin-top: 25px;
+            font-size: 16px;
+        }
+        .comando {
+            background: #1a3a5c;
+            color: #fff;
+            padding: 12px 18px;
+            border-radius: 6px;
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 15px;
+            margin: 15px 0;
+            display: block;
+        }
+        .terminal {
+            background: #0c0c0c;
+            color: #cccccc;
+            padding: 16px 20px;
+            border-radius: 6px;
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 13px;
+            margin: 15px 0;
+            white-space: pre-wrap;
+            line-height: 1.5;
+        }
+        .terminal .destaque { color: #4fc3f7; }
+        .terminal .verde { color: #66bb6a; }
+        .terminal .amarelo { color: #fdd835; }
+        .terminal .input { color: #fff; font-weight: bold; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 14px;
+        }
+        th {
+            background: #1a3a5c;
+            color: #fff;
+            padding: 10px 12px;
+            text-align: left;
+        }
+        td {
+            border: 1px solid #ddd;
+            padding: 8px 12px;
+        }
+        tr:nth-child(even) { background: #f5f8fb; }
+        .alerta {
+            background: #fff3e0;
+            border-left: 4px solid #ff9800;
+            padding: 12px 16px;
+            margin: 15px 0;
+            border-radius: 0 6px 6px 0;
+        }
+        .info {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 12px 16px;
+            margin: 15px 0;
+            border-radius: 0 6px 6px 0;
+        }
+        .sucesso {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 12px 16px;
+            margin: 15px 0;
+            border-radius: 0 6px 6px 0;
+        }
+        .perigo {
+            background: #ffebee;
+            border-left: 4px solid #f44336;
+            padding: 12px 16px;
+            margin: 15px 0;
+            border-radius: 0 6px 6px 0;
+        }
+        .rodape {
+            text-align: center;
+            color: #888;
+            font-size: 12px;
+            margin-top: 50px;
+            border-top: 1px solid #ddd;
+            padding-top: 15px;
+        }
+        .passo {
+            background: #1a3a5c;
+            color: #fff;
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 14px;
+            margin-right: 8px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Manual de Uso<br><small style="font-size:16px; color:#555;">Envio Padrao - Primeira Mensagem (enviar.php)</small></h1>
+
+<h2>1. Pre-requisitos</h2>
+<ul>
+    <li>PHP 8.0 ou superior instalado</li>
+    <li>Extensao <strong>PDO</strong> e <strong>cURL</strong> habilitadas</li>
+    <li>Acesso ao banco de dados (configurado em <code>conexao.php</code>)</li>
+    <li>Acesso a internet (para envio via webhook)</li>
+</ul>
+
+<h2>2. Arquivos do projeto</h2>
+<table>
+    <tr><th>Arquivo</th><th>Descricao</th></tr>
+    <tr><td><strong>enviar.php</strong></td><td>Script principal - executa todo o fluxo de envio</td></tr>
+    <tr><td><strong>conexao.php</strong></td><td>Configuracao de conexao com o banco de dados</td></tr>
+</table>
+
+<h2>3. Como executar</h2>
+<p>Abra o terminal (CMD, PowerShell ou Git Bash) na pasta do projeto e execute:</p>
+<span class="comando">php enviar.php</span>
+<p>O script vai fazer uma serie de perguntas interativas. Veja abaixo cada etapa.</p>
+
+<!-- ========== PASSO 1 ========== -->
+<h2>4. Passo a passo das perguntas</h2>
+
+<h3><span class="passo">1</span> Escolha da Escola</h3>
+<div class="terminal">Escolha a escola:
+  [1] Liceu - Itaquaquecetuba (Brasil + Beleza)
+  [2] Liceu - Aruja
+  [3] Liceu - Suzano
+
+Digite o numero da escola: <span class="input">1</span></div>
+
+<table>
+    <tr><th>Opcao</th><th>O que faz</th></tr>
+    <tr><td><strong>[1]</strong></td><td>Filtra contatos das escolas <em>Liceu Brasil - Itaquaquecetuba</em> e <em>Liceu Beleza - Itaquaquecetuba</em></td></tr>
+    <tr><td><strong>[2]</strong></td><td>Filtra contatos da escola <em>Liceu - Aruja</em></td></tr>
+    <tr><td><strong>[3]</strong></td><td>Filtra contatos da escola <em>Liceu - Suzano</em></td></tr>
+</table>
+<div class="info">Cada escola possui seu proprio webhook de envio. O script seleciona automaticamente o webhook correto.</div>
+
+<!-- ========== PASSO 2 ========== -->
+<h3><span class="passo">2</span> Escolha dos Cursos</h3>
+<div class="terminal">Escolha os cursos (separados por virgula, ou 0 para TODOS):
+  [1] Ingles
+  [2] Logistica
+  [3] Informatica Kids
+  [4] Desenho
+  [5] Marketing Digital
+  [6] Auxiliar Administrativo
+  [7] Libras
+  [8] Recursos Humanos
+  [9] Administracao de Negocios
+  [10] Atendimento ao Cliente
+  [11] Manicure e Pedicure
+  [12] Corte Masculino Basico
+  [13] Corte Feminino Basico - Escova
+  [14] Design de Sobrancelhas
+  [15] Automaquiagem para o Dia
+  [16] Massagem Relaxante
+  [17] Gel na Tips
+  [18] Extensao de Cilios
+  [19] Informatica Melhor Idade
+  [20] Massagem Classica
+  [21] Eletrica
+  [22] Jovem Aprendiz
+
+Digite os numeros (ex: 1,3,17 ou 0 para todos): <span class="input">1,3,17</span></div>
+
+<table>
+    <tr><th>Entrada</th><th>O que faz</th></tr>
+    <tr><td><strong>0</strong></td><td>Seleciona <strong>todos</strong> os 22 cursos</td></tr>
+    <tr><td><strong>1,3,17</strong></td><td>Seleciona apenas <em>Ingles</em>, <em>Informatica Kids</em> e <em>Gel na Tips</em></td></tr>
+    <tr><td><strong>5</strong></td><td>Seleciona apenas <em>Marketing Digital</em></td></tr>
+</table>
+<div class="info">Voce pode escolher quantos cursos quiser, separando por virgula. O filtro busca apenas contatos inscritos nesses cursos.</div>
+
+<!-- ========== PASSO 3 ========== -->
+<h3><span class="passo">3</span> Filtro por Aluno</h3>
+<div class="terminal">Filtrar por aluno:
+  [0] Tanto faz (Ambos os casos)
+  [1] Nunca estudou no Liceu
+  [2] Ja estudou no Liceu
+Escolha: <span class="input">1</span></div>
+
+<table>
+    <tr><th>Opcao</th><th>O que faz</th><th>Filtro no banco</th></tr>
+    <tr><td><strong>[0]</strong></td><td>Nao filtra - traz todos os contatos independente de serem alunos ou nao</td><td><em>sem filtro</em></td></tr>
+    <tr><td><strong>[1]</strong></td><td>Apenas pessoas que <strong>nunca estudaram</strong> no Liceu (leads novos)</td><td><code>is_student = 0</code></td></tr>
+    <tr><td><strong>[2]</strong></td><td>Apenas pessoas que <strong>ja estudaram</strong> no Liceu (ex-alunos ou alunos ativos)</td><td><code>is_student = 1</code></td></tr>
+</table>
+
+<!-- ========== PASSO 4 ========== -->
+<h3><span class="passo">4</span> Escolha da Campanha</h3>
+<div class="terminal">Escolha a campanha:
+  [1] Bolsas 2025-08
+  [2] Bolsas 2026-01
+Escolha: <span class="input">2</span></div>
+
+<table>
+    <tr><th>Opcao</th><th>Campanha</th></tr>
+    <tr><td><strong>[1]</strong></td><td>Bolsas 2025-08 (campanha anterior)</td></tr>
+    <tr><td><strong>[2]</strong></td><td>Bolsas 2026-01 (campanha atual)</td></tr>
+</table>
+<div class="info">O script filtra apenas contatos vinculados a campanha escolhida.</div>
+
+<!-- ========== TOTAL ========== -->
+<h3><span class="passo">5</span> Total de contatos disponiveis</h3>
+<div class="terminal"><span class="verde">&gt;&gt; Total de contatos disponiveis: 847</span>
+Quantidade para enviar (ou 0 para todos): <span class="input">200</span></div>
+
+<table>
+    <tr><th>Entrada</th><th>O que faz</th></tr>
+    <tr><td><strong>0</strong></td><td>Seleciona <strong>todos</strong> os contatos disponiveis (no exemplo, 847)</td></tr>
+    <tr><td><strong>200</strong></td><td>Limita o envio aos primeiros 200 contatos</td></tr>
+</table>
+<div class="info">O total exibido e a quantidade de contatos <strong>unicos por telefone</strong> que atendem a todos os filtros selecionados (escola + cursos + aluno + campanha + status nulo).</div>
+
+<!-- ========== PASSO 5 ========== -->
+<h3><span class="passo">6</span> Modo de Execucao</h3>
+<div class="terminal">Modo de execucao:
+  [1] ENVIAR (webhook + atualiza status)
+  [2] SIMULAR (apenas gera CSV, nao envia nada)
+Escolha: <span class="input">2</span></div>
+
+<table>
+    <tr><th>Opcao</th><th>O que faz</th></tr>
+    <tr><td><strong>[1] ENVIAR</strong></td><td>Envia os dados para o webhook (SellFlux) e atualiza o status do contato no banco para <code>selected</code>. <strong>Acao irreversivel.</strong></td></tr>
+    <tr><td><strong>[2] SIMULAR</strong></td><td>Apenas consulta o banco e gera o arquivo CSV. <strong>Nao envia nada</strong> para o webhook e <strong>nao altera</strong> nenhum dado no banco.</td></tr>
+</table>
+<div class="alerta"><strong>Recomendacao:</strong> Sempre execute primeiro no modo <strong>SIMULAR</strong> para conferir os contatos no CSV antes de fazer o envio real.</div>
+
+<!-- ========== PASSO 6 ========== -->
+<h3><span class="passo">7</span> Salvar CSV (apenas no modo ENVIAR)</h3>
+<div class="terminal">Deseja salvar os contatos em CSV? (s/n): <span class="input">s</span></div>
+
+<table>
+    <tr><th>Entrada</th><th>O que faz</th></tr>
+    <tr><td><strong>s</strong></td><td>Gera um arquivo CSV com todos os contatos que serao enviados</td></tr>
+    <tr><td><strong>n</strong></td><td>Nao gera CSV, vai direto para o envio</td></tr>
+</table>
+<div class="info">No modo <strong>SIMULAR</strong>, o CSV e gerado automaticamente (esta pergunta nao aparece).</div>
+
+<p>O arquivo CSV e salvo na mesma pasta com o nome:</p>
+<span class="comando">contatos_Liceu_-_Itaquaquecetuba_2026-02-13_10-30-00.csv</span>
+<p>O CSV usa separador <strong>ponto e virgula (;)</strong> e abre corretamente no Excel com acentos.</p>
+
+<!-- ========== CONFIRMACAO ========== -->
+<h3><span class="passo">8</span> Resumo e Confirmacao</h3>
+<div class="terminal">--------------------------------------------
+Modo:       ENVIO REAL
+Escola:     Liceu - Itaquaquecetuba
+Campanha:   Bolsas 2026-01
+Cursos:     Ingles, Informatica Kids, Gel na Tips
+Aluno:      Nunca estudou no Liceu
+Total disp: 847
+Quantidade: 200
+Salvar CSV: Sim
+--------------------------------------------
+Confirma? (s/n): <span class="input">s</span></div>
+
+<div class="perigo"><strong>Atencao:</strong> Ao confirmar com <strong>s</strong> no modo ENVIAR, o envio comeca imediatamente e nao pode ser desfeito. Confira todas as informacoes do resumo antes de confirmar.</div>
+
+<!-- ========== EXECUCAO ========== -->
+<h2>5. Durante a execucao</h2>
+
+<h3>Modo ENVIAR</h3>
+<div class="terminal"><span class="verde">[1/200] Enviado com sucesso: 11999998888</span>
+<span class="verde">[2/200] Enviado com sucesso: 11999997777</span>
+<span class="verde">[3/200] Enviado com sucesso: 11999996666</span>
+...
+
+============================================
+Envio finalizado! Total enviados: 200/200
+============================================</div>
+<p>Para cada contato enviado com sucesso, o script:</p>
+<ol>
+    <li>Envia os dados para o webhook do SellFlux</li>
+    <li>Atualiza o status do contato no banco para <code>selected</code></li>
+    <li>Aguarda <strong>1 segundo</strong> antes do proximo envio</li>
+</ol>
+
+<h3>Modo SIMULAR</h3>
+<div class="terminal">Contatos encontrados: 200
+CSV salvo em: contatos_Liceu_-_Itaquaquecetuba_2026-02-13_10-30-00.csv
+
+============================================
+Simulacao finalizada! 200 contatos encontrados.
+Nenhum envio foi realizado.
+============================================</div>
+
+<!-- ========== CSV ========== -->
+<h2>6. Arquivo CSV gerado</h2>
+<p>O CSV contem as seguintes colunas:</p>
+<table>
+    <tr><th>Coluna</th><th>Descricao</th></tr>
+    <tr><td>Nome</td><td>Nome completo do contato</td></tr>
+    <tr><td>Telefone</td><td>Numero do celular</td></tr>
+    <tr><td>Email</td><td>Email do contato</td></tr>
+    <tr><td>Protocolo Inscricao</td><td>Numero de referencia da inscricao</td></tr>
+    <tr><td>Curso</td><td>Nome do curso em que esta inscrito</td></tr>
+    <tr><td>Codigo Agendamento</td><td>ID unico do contato no sistema</td></tr>
+    <tr><td>Escola</td><td>Nome da escola</td></tr>
+    <tr><td>Status</td><td>Status atual do contato</td></tr>
+</table>
+
+<!-- ========== FLUXO ========== -->
+<h2>7. Fluxo resumido</h2>
+<div style="text-align:center; margin: 20px 0;">
+    <div style="display:inline-block; text-align:left;">
+        <p><span class="passo">1</span> Escola &rarr; <span class="passo">2</span> Cursos &rarr; <span class="passo">3</span> Aluno &rarr; <span class="passo">4</span> Campanha</p>
+        <p style="margin-left: 40px;">&darr;</p>
+        <p><span class="passo">5</span> Total + Quantidade &rarr; <span class="passo">6</span> Modo &rarr; <span class="passo">7</span> CSV &rarr; <span class="passo">8</span> Confirmar</p>
+        <p style="margin-left: 40px;">&darr;</p>
+        <p style="margin-left: 20px;"><strong>SIMULAR:</strong> Gera CSV e encerra</p>
+        <p style="margin-left: 20px;"><strong>ENVIAR:</strong> Envia webhook + atualiza banco + (CSV opcional)</p>
+    </div>
+</div>
+
+<!-- ========== DICAS ========== -->
+<h2>8. Dicas importantes</h2>
+<div class="sucesso"><strong>Sempre simule primeiro:</strong> Use o modo SIMULAR para gerar o CSV e conferir os contatos antes de fazer o envio real.</div>
+<div class="alerta"><strong>Contatos ja enviados nao aparecem de novo:</strong> Apos o envio, o status do contato muda para <code>selected</code>. Na proxima execucao, ele nao sera mais listado (o script filtra apenas <code>status IS NULL</code>).</div>
+<div class="info"><strong>Intervalo entre envios:</strong> O script aguarda 1 segundo entre cada envio para nao sobrecarregar o webhook.</div>
+<div class="info"><strong>Cancelar durante o envio:</strong> Pressione <code>Ctrl+C</code> no terminal para interromper. Os contatos ja enviados terao seu status atualizado no banco.</div>
+
+<div class="rodape">
+    Manual - Envio Padrao Primeira Mensagem &bull; Versao 1.0 &bull; Fevereiro 2026
+</div>
+
+</body>
+</html>
