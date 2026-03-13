@@ -134,7 +134,7 @@ $escolas = [
     ],
     '3' => [
         'nome'    => 'Liceu - Suzano',
-        'webhook' => 'https://webhook.sellflux.app/v2/webhook/custom/5d53a0e1aa4306599945c7175c4eb263',
+        'webhook' => 'https://webhook.sellflux.app/v2/webhook/active_campaign/f86efd3f1f829678466a8913a4ddef11',
     ],
 ];
 
