@@ -37,13 +37,18 @@ echo "============================================\n\n";
 
 // 1. Escolher escola
 echo "Escolha a escola:\n";
-echo "  [1] Liceu - Itaquaquecetuba (Brasil + Beleza)\n";
-echo "  [2] Liceu - Aruja\n";
-echo "  [3] Liceu - Suzano\n";
+echo "  [1] Liceu - Itaquaquecetuba (Brasil + Beleza) - 2026\n";
+echo "  [2] Liceu - Aruja - 2026\n";
+echo "  [3] Liceu - Suzano - 2026\n";
+echo "========================================================\n";
+echo "  [4] Liceu - Itaquaquecetuba (Brasil + Beleza) - 2025\n";
+echo "  [5] Liceu - Aruja - 2025\n";
+echo "  [6] Liceu - Suzano - 2025\n";
+
 echo "\nDigite o numero da escola: ";
 $escolha_escola = trim(fgets(STDIN));
 
-if (!in_array($escolha_escola, ['1', '2', '3'])) {
+if (!in_array($escolha_escola, ['1', '2', '3', '4', '5', '6'])) {
     echo "Opcao invalida. Encerrando.\n";
     exit(1);
 }
@@ -136,6 +141,18 @@ $escolas = [
         'nome'    => 'Liceu - Suzano',
         'webhook' => 'https://webhook.sellflux.app/v2/webhook/active_campaign/f86efd3f1f829678466a8913a4ddef11',
     ],
+    '4' => [
+        'nome'    => 'Liceu - Itaquaquecetuba - 2025',
+        'webhook' => 'https://webhook.sellflux.app/v2/webhook/active_campaign/9173f9cc16d0c7e07f39309621d40515',
+    ],
+    '5' => [
+        'nome'    => 'Liceu - Aruja - 2025',
+        'webhook' => 'https://webhook.sellflux.app/v2/webhook/active_campaign/bb94c6202d68f255ffd105d8586f3a6d',
+    ],
+    '6' => [
+        'nome'    => 'Liceu - Suzano - 2025',
+        'webhook' => 'https://webhook.sellflux.app/v2/webhook/active_campaign/56e904f767a4fdb501d134c9807514f1',
+    ],
 ];
 
 $escola  = $escolas[$escolha_escola];
@@ -151,7 +168,7 @@ $filtro_aluno_sql = match($escolha_aluno) {
 
 // ========== CONTAR TOTAL SEM LIMIT ==========
 
-if ($escolha_escola === '1') {
+if ($escolha_escola === '1' || $escolha_escola === '4') {
     $sql_count = "
         SELECT COUNT(*) AS total FROM (
             SELECT contacts.mobile_phone
@@ -171,7 +188,7 @@ if ($escolha_escola === '1') {
             GROUP BY contacts.mobile_phone
         ) t
     ";
-} elseif ($escolha_escola === '2') {
+} elseif ($escolha_escola === '2' || $escolha_escola === '5') {
     $sql_count = "
         SELECT COUNT(*) AS total FROM (
             SELECT contacts.mobile_phone
@@ -191,7 +208,7 @@ if ($escolha_escola === '1') {
             GROUP BY contacts.mobile_phone
         ) t
     ";
-} elseif ($escolha_escola === '3') {
+} elseif ($escolha_escola === '3' || $escolha_escola === '6') {
     $sql_count = "
         SELECT COUNT(*) AS total FROM (
             SELECT contacts.mobile_phone
@@ -274,7 +291,7 @@ if ($confirma !== 's') {
 
 // ========== MONTAR QUERY ==========
 
-if ($escolha_escola === '1') {
+if ($escolha_escola === '1' || $escolha_escola === '4') {
     // Itaquaquecetuba
     $sql = "
         SELECT name, phone, email, protocolo_inscricao, nome_curso_1, codigo_agendamento, name_school, status, created_at
@@ -311,7 +328,7 @@ if ($escolha_escola === '1') {
         LIMIT {$limite}
     ";
 
-} elseif ($escolha_escola === '2') {
+} elseif ($escolha_escola === '2' || $escolha_escola === '5') {
     // Aruja
     $sql = "
         SELECT name, phone, email, protocolo_inscricao, nome_curso_1, codigo_agendamento, name_school, status, created_at
@@ -348,7 +365,7 @@ if ($escolha_escola === '1') {
         LIMIT {$limite}
     ";
 
-} elseif ($escolha_escola === '3') {
+} elseif ($escolha_escola === '3' || $escolha_escola === '6') {
     // Suzano
     $sql = "
         SELECT name, phone, email, protocolo_inscricao, nome_curso_1, codigo_agendamento, name_school, status, created_at
